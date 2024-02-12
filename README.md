@@ -21,7 +21,14 @@ So today, let me introduce you some useful tips on How to Create Your Own Meme T
 
 -Full Tutorial on how to create normal meme token with unlimited supply printing function (Non-Honeypot, Normal Meme Token, with Unlimited Token Supply Printing Function): https://www.createyourowntoken.net/post/create-your-own-meme-token-with-unlimited-supply-printing-normal-token-not-honeypot-with-unlimite
 
--View Non-Honeypot, Normal Meme Token with Unlimited Token Supply Printing Function Token Smart Contract Code: https://www.createyourowntoken.net/copy-of-normal-meme-token-similar-to
+-View Non-Honeypot, Normal Meme Token with Unlimited Token Supply Printing Function Smart Contract Code: https://www.createyourowntoken.net/copy-of-normal-meme-token-similar-to
+
+
+3)Normal meme token with ownership renounce function (Not Honeypot, Normal Meme Token, with Ownership Renounce Function)
+
+-Full Tutorial on how to create normal meme token with ownership renounce function (Not Honeypot, Normal Meme Token, with Ownership Renounce Function): https://www.createyourowntoken.net/post/create-your-own-meme-token-with-ownership-renounce-normal-token-not-honeypot-with-ownership-renou
+
+-View Not Honeypot, Normal Meme Token, with Ownership Renounce Function Smart Contract Code: https://www.createyourowntoken.net/copy-of-supply-printing-normal-meme-t
 
 
 
