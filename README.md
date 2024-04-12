@@ -38,6 +38,7 @@ View Full Tutorial: https://www.createyourowntoken.net/post/create-your-own-meme
 View Upgraded Version V2, Non-Honeypot, Normal Meme Token with Unlimited Token Supply Printing Function Token Smart Contract Code: https://www.createyourowntoken.net/copy-of-v2-blacklist-detector-proof
 
 
+Learn How to Switch Network in Metamask Wallet: https://www.createyourowntoken.net/post/how-to-add-network-and-change-network-in-your-metamask-wallet
 
 Learn How to Attract People to Buy Your Tokens: https://www.createyourowntoken.net/post/little-techniques-on-marketing-your-tokens
 
