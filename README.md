@@ -53,7 +53,7 @@ What is DxSale?
 
 DxSale is a leading launchpad, token minting and liquidity locking platform that streamlines the process of creating, launching and locking tokens. DxSale is an advanced web3.0 platform designed to cater to the needs of users in the rapidly growing cryptocurrency decentralized finance (DeFi) sector. The platform enables users to create their own tokens through DxMint, raise funds via DxSale, and secure their tokens with DxLock.
 
-Special Affiliate Program: Create Fee Token, Dividend Token and many more tokens only in DxMint by DxSale (Small fees will be charged for creating token in DxMint)
+Special Affiliate Program: Create Fee Token, Dividend Token and many more tokens only in DxMint by DxSale [Small fees (mostly between $0.2-$15, vary from different blockchain networks) will be charged for creating token in DxMint]
 
 Create Token on DxMint now: https://dx.app/dxmint?ref=cyotoken
 
@@ -62,7 +62,7 @@ About DxMint:
 
 Dxmint is a token minter / token maker. Users can easily create their own token within seconds for whatever they want to use it for. Suppose you want to make a token with your name, you can make it under few seconds.
 
-There are currently 4 types of Tokens you can create with DxMint: Standard Token, Burn Token, Fee Token, Dividend Token. (Small fees will be charged for creating token in DxMint)
+There are currently 4 types of Tokens you can create with DxMint: Standard Token, Burn Token, Fee Token, Dividend Token. [Small fees (mostly between $0.2-$15, vary from different blockchain networks) will be charged for creating token in DxMint]
 
 
 Create Token on DxMint now: https://dx.app/dxmint?ref=cyotoken
